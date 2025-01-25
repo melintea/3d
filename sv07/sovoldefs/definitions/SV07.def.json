@@ -1,0 +1,101 @@
+{
+    "version": 2,
+    "name": "Sovol-SV07",
+    "inherits": "fdmprinter",
+    "metadata": {
+        "visible": true,
+        "author": "Sovol",
+        "manufacturer": "Sovol 3D",
+        "file_formats": "text/x-gcode",
+        "has_variants": false,
+        "has_machine_quality": false,
+        "preferred_quality_type": "draft",
+        "machine_extruder_trains": {
+            "0": "SV07_extruder_0"
+        }
+    },
+	
+    "overrides": {
+        "machine_name": { "default_value": "SV07" },
+        "machine_width": { "default_value": 224 },
+        "machine_depth": { "default_value": 224 },
+        "machine_height": { "default_value": 250 },
+        "machine_heated_bed": { "default_value": true },
+        "machine_start_gcode": { "default_value": "G28 ;Home\n\nG92 E0 ;Reset Extruder\nG1 Z2.0 F3000 ;Move Z Axis up\nG1 X10.1 Y20 Z0.28 F5000.0 ;Move to start position\nG1 X10.1 Y200.0 Z0.28 F1500.0 E15 ;Draw the first line\nG1 X10.4 Y200.0 Z0.28 F5000.0 ;Move to side a little\nG1 X10.4 Y20 Z0.28 F1500.0 E30 ;Draw the second line\nG92 E0 ;Reset Extruder\nG1 Z2.0 F3000 ;Move Z Axis up\n" },
+        "machine_end_gcode": { "default_value": "G91 ;Relative positioning\nG1 E-2 F2700 ;Retract a bit\nG1 E-2 Z0.2 F2400 ;Retract and raise Z\nG1 Z1 ;Raise Z more\nG90 ;Absolute positioning\n\nG1 X0 Y200 ;Present print\nM106 S0 ;Turn-off fan\nM104 S0 ;Turn-off hotend\nM140 S0 ;Turn-off bed\n\nM84 X Y E ;Disable all steppers but Z\n" },
+        
+        "line_width": { "value": 0.44 },
+        "layer_height": {"value": 0.2},
+        "layer_height_0": {"value": 0.2},
+        "initial_layer_line_width_factor": { "value": 150 },
+
+        "wall_thickness": { "value": 0.88 },
+        "wall_0_wipe_dist": { "value": 0 },
+        "top_thickness": {"value": 1},
+        "bottom_thickness": {"value": "top_bottom_thickness * 3 / 4"},
+        "outer_inset_first": {"value": true},
+        "inset_direction": {"default_value": "outside_in"},
+        "travel_compensate_overlapping_walls_enabled": {"value": false},
+        "skin_overlap": { "value": 10.0 },
+        "z_seam_relative": {"value": true},
+        "z_seam_position": {"default_value": "backleft"},
+        "z_seam_y": {"value": "(0 if z_seam_position == 'backleft' else ( 0 if (z_seam_position == 'frontleft' or z_seam_position == 'front' or z_seam_position == 'frontright' or z_seam_position == 'backleft') else machine_depth / 2 if (z_seam_position == 'left' or z_seam_position == 'right') else machine_depth) - (machine_depth / 2 if z_seam_relative or machine_center_is_zero else 0))"},
+
+        "infill_pattern": { "value": "'grid'" },
+        "infill_sparse_density": { "value": 10 },
+        "min_infill_area": {"value": 1},
+        "zig_zaggify_infill": { "value": true },
+        "infill_before_walls": {"value": false},
+
+        "material_print_temperature": { "value": 190 },
+        "material_bed_temperature": {"value": 50},
+        "material_flow_layer_0": {"value": 120},
+        "material_flow": {"value": 95},
+
+        "speed_print": { "value": 250.0 } ,
+        "speed_infill": { "value": "speed_print" },
+        "speed_wall": { "value": "speed_print * 4 / 5", "maximum_value_warning": "speed_print"},
+        "speed_wall_0": { "value": "speed_wall * 3 / 4", "maximum_value_warning": "speed_wall" },
+        "speed_wall_x": { "value": "speed_wall * 7 / 8", "maximum_value_warning": "speed_wall" },
+        "speed_topbottom": {"value": "speed_print * 3 / 5"},
+        "speed_travel": { "value": "speed_print" } ,
+        "speed_layer_0": { "value": "speed_print / 5" },
+        "speed_travel_layer_0": {"value": "speed_layer_0 * 12 / 5"},
+		"acceleration_enabled": {"value": true},
+        "acceleration_print": {"value": 8000},
+        "acceleration_travel": {"value": "acceleration_print"},
+        "acceleration_layer_0": {"value": 1000},
+		"jerk_enabled": {"value": false},
+		"jerk_print": { "value": 5 },
+		"jerk_travel": { "value": 10 },
+
+        "retract_at_layer_change": {"value": false},
+		"retraction_hop": { "value": "2 * layer_height" },
+		"retraction_speed": { "value": 40},
+        "retraction_combing": {"value": "off"},
+        "retraction_amount": {"value": 0.5},
+
+        "support_angle": {"value": 80},
+        "support_infill_rate": {"value": 10},
+        "support_brim_enable": {"value": true},
+        "support_interface_enable": {"value": true},
+        "support_z_distance": {"value": 0.3},
+		
+        "brim_width": { "value": 1.5 },
+        "skirt_line_count": { "value": 2 },
+        "skirt_gap":{"value": 0},
+        "raft_margin": { "value": 5 },
+        "brim_outside_only": {"value": false},
+        "conical_overhang_angle": {"value": 80},
+
+        "meshfix_maximum_extrusion_area_deviation": {"value" : 2000},
+
+        "bridge_wall_min_length": {"value": 5},
+        "bridge_settings_enabled": {"value": true},
+        "bridge_wall_speed": {"value": 60},
+        "bridge_wall_material_flow": {"value": 100},
+        "bridge_skin_speed": {"value": 60},
+        "bridge_skin_material_flow": {"value": 100},
+        "bridge_enable_more_layers": {"value": false}
+    }
+}
