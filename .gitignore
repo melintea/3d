@@ -1,0 +1,6 @@
+*.FCBak
+*.3mf
+*.gcode
+
+_3rdParty/
+
